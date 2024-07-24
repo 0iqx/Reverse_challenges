@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>writeup</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="puzzle">Puzzle</h1>
+<p>The puzzle was a neat challenge. When we ran it, it showed:</p>
+<pre><code>Do you like puzzles? I do
+Consider the following puzzle
+Spend exactly 100 dollars and buy exactly 100 animals.
+Dogs cost 15 dollars, cats cost 1 dollar, and mice cost 25 cents each.
+You have to buy at least one of each. How many of each should you buy?
+dogs: $15, cats: $1, mice $0.25
+</code></pre>
+<p>it asked for the number of each animal. You can solve it in two ways: the easy way and the math way.</p>
+<h2 id="easy-way">Easy way</h2>
+<p>Brute force each animal until it shows us ‘Congrats’.</p>
+<pre><code>for  i  in  range(1, 100):
+	for  j  in  range(1, 100):
+		for  k  in  range(1, 100):
+			if  check(i, j, k):
+				print("dogs:", i, "cats:", j, "mice:", k)
+</code></pre>
+<p><code>dogs: 3 cats: 41 mice: 56</code></p>
+<h2 id="math-way">Math way</h2>
+<p>Given that:</p>
+<ul>
+<li>d: the number of dogs</li>
+<li>c: the number of cats</li>
+<li>m: the number of mice</li>
+</ul>
+<p>The problem provides the following constraints:</p>
+<ol>
+<li>The total cost of the animals must be exactly 100 dollars.</li>
+<li>The total number of animals must be exactly 100.</li>
+<li>At least one of each type of animal must be bought.</li>
+</ol>
+<p>We can write the constraints as equations:<br>
+15d+1c+0.25m=100<br>
+d+c+m=100</p>
+<p>From the second equation we can solve for c in terms of d and m:</p>
+<pre><code>d + c + m = 100
+c = 100 - d - m
+</code></pre>
+<p>Substitute <code>c = 100 - d - m</code> into the first equation:<br>
+<code>15d + 1(100-d-m) + 0.25 = 100</code><br>
+Simplify the equation:</p>
+<pre><code>15d + 100 - d - m + 0.25 = 100
+14d - 0.75m + 100 = 100
+14d - 0.75m = 0
+d = 0.75m/14
+m = 14d/0.75
+</code></pre>
+<p>for <code>d</code> to be an integer, <code>0.75m/14</code> must be an integer. This means <code>m</code> must be a multiple of <code>4</code>.<br>
+d = 0.75*(4m) / 14</p>
+<p>For <code>m</code> to be an integer, <code>14d/0.75</code>  must be an integer. This means d must be a multiple of <code>3</code>.<br>
+m = 14(3d)/0.75</p>
+<pre><code>if d = 3,
+m = (14*3)/0.75 == 56
+c = 100 - 3 - 56 = 41
+Since c &gt;= 1, d &gt;= 1, m &gt;= 1
+3 + 41 + 56 = 100
+(15*3) + (41*1) + (56*0.25) == 100 
+Therefore, the solution is:
+-   Number of dogs (d): 3
+-   Number of cats (c): 41
+-   Number of mice (m): 56
+</code></pre>
+</div>
+</body>
+
+</html>
